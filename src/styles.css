@@ -1,0 +1,65 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/font-awesome/css/font-awesome.css";
+
+/* custom class */
+.chk_label {
+    display: block;
+    position: relative;    
+    cursor: pointer;
+    font-size: 22px;
+    width: 15px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.chk_label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 23px;
+    width: 23px;
+    background-color: #eee;
+}
+
+.chk_label:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+.chk_label input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.chk_label input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.chk_label .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.required:after {
+    content: " *"; 
+    color: red;
+}

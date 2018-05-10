@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 table-responsive">
+      <div>
+        <h3>
+          <span class="pull-left">To Do List</span>
+          <span class="pull-right">
+            <button type="button" class="btn btn-primary btn-xs" (click)="ToDoModel_Open()">
+              <span class="fa fa-plus"></span>&nbsp;Add To-Do
+            </button>
+          </span>
+          <br>
+        </h3>
+      </div>
+      <table class="table table-bordered">
+        <tr>
+          <th *ngIf="lst_ToDo?.length > 0">
+            <label class="chk_label">
+              <input type="checkbox" (change)="SelectAll($event)">
+              <span class="checkmark"></span>
+            </label>
+          </th>
+          <th *ngIf="lst_ToDo?.length == 0"></th>
+          <th>Task</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+        <tr *ngFor="let item of lst_ToDo; let i = index">
+          <td>
+            <label class="chk_label">
+              <input type="checkbox" [checked]="item.Status" (change)="StatusChanged(i, $event)">
+              <span class="checkmark"></span>
+            </label>
+          </td>
+          <td>{{item.Task}}</td>
+          <td>{{item.Date}}</td>
+          <td>
+            <button type="button" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-xs btn-primary" (click)="ToDoModel_Edit(i, item)">
+              <span class="fa fa-pencil"></span>
+            </button>
+            <button type="button" data-toggle="tooltip" data-placement="top" title="Delete" class="btn btn-xs btn-danger" (click)="ToDo_Remove(i)">
+              <span class="fa fa-trash"></span>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="lst_ToDo?.length > 0">
+          <td colspan="5" class="text-left">
+            <button type="button" class="btn btn-xs btn-danger" (click)="DeleteSelectedToDos()">
+              Delete Selected Todos
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="ToDoModel" bsModal #ToDoModel="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <form [formGroup]="To_Do_form" class="form-validate form-horizontal" novalidate="">
+        <div class="modal-header">
+          <button type="button" class="close" aria-label="Close" (click)="ToDoModel_Close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">Add To Do</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="col-md-3 control-label required">Task :</label>
+            <div class="col-md-8">
+              <textarea class="form-control" formControlName="task" rows="2"></textarea>
+              <span class="text-danger" *ngIf="To_Do_form.controls['task'].hasError('required') && (To_Do_form.controls['task'].dirty || To_Do_form.controls['task'].touched)">Please enter task</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label required">Date :</label>
+            <div class="col-md-8">
+              <input type="date" class="form-control" formControlName="date">
+              <span class="text-danger" *ngIf="To_Do_form.controls['date'].hasError('required') && (To_Do_form.controls['date'].dirty || To_Do_form.controls['date'].touched)">Please select date</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="ToDoModel_Save($event, To_Do_form.value)">Save</button>
+          <button type="button" class="btn btn-danger" (click)="ToDoModel_Close()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
